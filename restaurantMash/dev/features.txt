@@ -1,0 +1,183 @@
+Features: For each feature you implement, move to the Implemented section and
+explain who did it (utorid) and how you did it. You can consider these as
+almost user stories, if you just add a bit to them. Add more features/user stories at the bottom.
+Move them up when completed.
+
+------------------------------------------------------------------------------------
+Implemented:
+------------------------------------------------------------------------------------
+0) Login
+   Done by: arnold
+   Explanation: created schema, including appuser table, populated with
+   default user. Also created handler for login state as well as login page.
+
+------------------------------------------------------------------------------------
+Unimplemented:
+------------------------------------------------------------------------------------
+01) User never votes twice on the same pair
+    Done by: Tongxinr
+    Explanation: Done via checking token with hidden submit.
+
+02) Page token: Reload button does not cause incorrect vote, that is reload presents
+   expired message and new page presented
+    Done by: Tongxinr
+    Explanation: not really page token per say, but a combination of using buttons and _POST as redirect
+
+03) Page token: Back button not allowed, that is old submission prevented
+    Done by: Tongxinr
+    Explanation: not really page token per say, but a combination of using buttons and _POST as redirect
+
+04) Excellent use of MVC
+    Done by: Both Students
+    Explanation: Both Students followed the MVC design process. The Views only contained minimal PHP code
+    and was used for display only. The Controller (index.php) filtered for user inputs and navigated through
+    the Views via user input (ie. button presses or submits). Lastly, the Model contained the core functionality
+    and SQL querying of the website (ie. compete functions).
+
+05) Insecure direct object references prevented, don't need object id's on the page
+    Done by: Choinic1
+    Explanation: Attackers cannot access the account pages/profiles of other users by changing parameters in their browser. To access
+    a profile, a user can only do so by logging in via the Login page. The website logs them in IF AND ONLY IF the SQL verifies
+    that the fields they have submitted match the records in the SQL DB.
+
+06) Good schema
+    Done by: Both Students
+    Explanation: Choinic1 altered the 'appuser' schema to incorporate values for the User Profile.
+    He also developed the 'restaurants' schema for use in the Results view page. Good use of Default Values
+    and Domain Key Constraints. Also used the appropriate type for each field (ie. int for # of wins).
+
+    Tongxinr developed the last relation: 'dailyelo' which was used to calculate in the Daily Winner table
+    of Results. He also demonstrated good use of Default Values, Constraints, and Field Types.
+
+07) Summary screen presents list of restaurants and their current ranking
+    Done by: Choinic1
+    Explanation: The Results Screen pulls data from the SQL via a query. The data is fetched with
+    pg_fetch_array and echo'd into a table in HTML5 format. The data is pulled from the 'restaurants'
+    relation in descending order (by query). The Results Screen shows the # of wins, losses, ties, ELO,
+    and restaurant name.
+
+08) Summary screen presents some notion of velocity for each restaurant, for example
+   velocity over the past few ratings, velocity over the past few minutes.
+   Users see which restaurants are moving in the ratings fastest.
+    Done by: Tongxinr
+    Explanation: Uses a schema to record elo changes. It only shows daily changes.
+
+09) Summary screen automatically updates every once in a while.
+    Done by: Tongxinr
+    Explanation: Literally just refreshes the page every 10 seconds.
+
+10) Good implementation of navigation in the controller.
+    Done by: Both Students
+    Explanation: Both students stuck to the MVC model and only navigation was done in the controller.
+    Both students utilized checked if submit requests were made via $_POST or $_REQUEST and issets().
+    Whenever, we navigated pages, we changed the case and the state in the SESSION.
+
+11) User profile has lots of interesting inputs
+    Done by: Choinic1
+    Explanation: Changed the "appuser" relation to contain personalized information for each user including:
+    gender (male, female, other), their favourite restaurant (doesn't have to be one we included in restaurants.txt), their username (non-changeable),
+    password (changeable), phone number (restricted to only valid, 10 digit numerical values), their preferred methods of transportation
+    and vote count (not alterable field). This info is shown and all the fields except username and vote count are updateable in the Profile view.
+
+12) Invalid form submission triggers page reload with form still filled in
+    as well as good error messages.
+    Done by: Choinic1
+    Explanation: Invalid form submission in Login will result in the username being refilled with prior information.
+    The Register view will reset a blank field for both user/pass so the User can try again. Invalid fields
+    in Profile will revert the fields back to their original, valid values.
+
+    All invalid form submissions will display errors through the errors array on the front-end.
+
+13) All user inputs whitelisted on the backend, whether checked on the front
+    or not.
+    Done by: Both Students
+    Explanation: All user inputs are whitelisted on the backend and checked in the front-end.
+    Whenever, an invalid user input is given, the front-end throws an error into the errors array
+    and issues a break statement in index.php until another request is given by the user.
+
+14) Good use of HTML5 form fields for form validation.
+    Done by: Choinic1
+    Explanation: Appropriate Form Fields were used for each corresponding situation. Certain Form Fields
+    even had restrictions for proper form validation. For example, Phone Numbers field was restricted in the HTML
+    code to only allow up to 10 digits (because phone numbers are only up to 10 digits long).
+
+15) User profile can be visited for the first time (on registration),
+    on error, and on update in which case it is pre-loaded with
+    appropriate fields.
+    Done by: Choinic1
+    Explanation: User Profile can be visited after a login. A profile will always be preloaded with information
+    regarding that user. For example, a newly made user's profile will contain only it's username and password fields filled.
+    All updated changes will remain even after a logout and is saved in their SQL rows.
+
+16) Good use of sql
+    Done by: Both Students
+    Explanation: Both Students used proper Prepare/Execute statements which prevent SQL injection on any queries that
+    use user input. For queries without user input, PG_Query is used because SQL injection is not possible. Both students
+    developed Good Schema/Relations for 'restaurant', 'appuser', and 'dailyelo'.
+
+17) Wins vs losses vs ties on results page
+    Done by: Choinic1
+    Explanation: Choinic1 developed a good 'restaurant' schema which contains each restaurants W/L/T record. The Results page
+    simply pulls this information via SQL query and shows it in a HTML Table in the Results Page.
+
+18) Navigation highlights which page they are on
+    Done by: Tongxinr
+    Explanation: CSS opacity = 0.6;
+
+19) Require user to answer 10 (for example) before they can see results
+    Done by: Both Students
+    Explanation: stores the amount answered in a schema and put that in a session variable that is accessed.
+
+20) Add in option for tie or ‘I don’t know’ instead of just one wins etc.
+    Done by: Tongxinr
+    Explanation: Just another button.
+
+21) Smarter choice of pairs, so for example, restaurants compete with ‘closely rated’ other restaurants. (Is this better?)
+    Done by: Tongxinr
+    Explanation: OH BOY, uses division.php which matches restaurant with similar elo. The division is generated on login.
+    Therefore if you logout and login you will most likely get a new division generated.
+
+22) Good use of session
+    Done by: Both Students
+    Explanation: Both students made sure to use session to store and keep track of important variables (ie. user information). Both students made
+    sure that each session is destroyed upon User logout.
+
+23) Good use of transactions as appropriate. Note: You can put a begin/commit block in a try/catch to simplify transaction exception handling.
+    Done by: Tongxinr
+    Explanation: Did exactly what the note said.
+
+24) Description: Setup.sh and Schema.SQL loads all restaurants in restaurants.txt.
+    Done by: Choinic1
+    Explanation: A \copy command in Schema.SQL loads all the restaurants in restaurants.txt into the generated restaurants table. We used
+    \copy instead of COPY because \copy uses relative paths while COPY uses absolute paths. People obviously may store their RestaurantMash's in
+    different locations.
+
+Add more user stories below... move them up when done
+
+25) Description:
+    Done by: UTORID
+    Explanation:
+
+26) Description:
+    Done by: UTORID
+    Explanation:
+
+27) Description:
+    Done by: UTORID
+    Explanation:
+
+28) Description:
+    Done by: UTORID
+    Explanation:
+
+29) Description:
+    Done by: UTORID
+    Explanation:
+
+30) Description:
+    Done by: UTORID
+    Explanation:
+
+31) Description:
+    Done by: UTORID
+    Explanation:
